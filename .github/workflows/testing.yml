@@ -1,0 +1,47 @@
+name: "Testing"
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  rspec:
+    permissions: write-all
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:11-alpine
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_DB: e_social_mine_api_test
+          POSTGRES_USER: social_mine
+          POSTGRES_PASSWORD: S@c1@l_m1nE
+
+    env:
+      RAILS_ENV: test
+      DB_USERNAME: "social_mine"
+      DB_PASSWORD: "S@c1@l_m1nE"
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler: default
+          bundler-cache: true
+
+      - name: Set up database
+        run: bundle exec rails db:setup
+
+      - name: Run tests
+        run: |
+          bundle exec rspec spec/
+
+      - uses: joshmfrankel/simplecov-check-action@main
+        with:
+          minimum_suite_coverage: 0
+          minimum_file_coverage: 0
+          github_token: ${{ secrets.GITHUB_TOKEN }}
