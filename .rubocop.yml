@@ -1,0 +1,21 @@
+require:
+  - rubocop-rspec
+  - rubocop-rails
+  - rubocop-factory_bot
+
+Rails/UnknownEnv:
+  Environments:
+    - test
+    - development
+    - staging
+    - production
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.2.0
+
+Style/Documentation:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 140
