@@ -1,20 +1,20 @@
-name: "Testing" # This sets the name of the workflow
-on: # This specifies when the workflow should run
+name: "Testing"
+on:
   push:
-    branches: [ "main" ] # The workflow will run on code pushes to the specified branches (main)
+    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ] # The workflow will run on pull requests to the specified branches (main)
-jobs: # A job is a set of steps that are executed in parallel or sequentially. In this case, there's one job named rspec
+    branches: [ "main" ]
+jobs:
   rspec:
-    permissions: write-all # Grants write permissions to all users for this job
-    runs-on: ubuntu-latest # Specifies that the job will run on the latest version of Ubuntu
+    permissions: write-all
+    runs-on: ubuntu-latest
 
-    services: # This section defines a PostgreSQL service container that will be used for the tests
+    services:
       postgres:
-        image: postgres:11-alpine # the PostgreSQL container runs with the specified image (postgres:11-alpine)
+        image: postgres:11-alpine
         ports:
-          - "5432:5432" # it exposes its port (5432) to the host
-        env: # environment variables are set to configure the PostgreSQL instance.
+          - "5432:5432"
+        env:
           POSTGRES_DB: e_social_mine_api_test
           POSTGRES_USER: social_mine
           POSTGRES_PASSWORD: S@c1@l_m1nE
@@ -25,22 +25,22 @@ jobs: # A job is a set of steps that are executed in parallel or sequentially. I
       DB_PASSWORD: "S@c1@l_m1nE"
 
     steps:
-      - uses: actions/checkout@v3 #  This step checks out the repository's code
+      - uses: actions/checkout@v3
 
       - name: Setup ruby
-        uses: ruby/setup-ruby@v1 # This step sets up the Ruby environment and installs Bundler with caching enabled
+        uses: ruby/setup-ruby@v1
         with:
           bundler: default
           bundler-cache: true
 
       - name: Set up database
-        run: bundle exec rails db:setup # This step sets up the test database
+        run: bundle exec rails db:setup
 
       - name: Run tests
-        run: bundle exec rspec # This step runs RSpec tests
+        run: bundle exec rspec
 
-      - uses: joshmfrankel/simplecov-check-action@main # This step uses the "simplecov-check-action" to check for code coverage
-        with: # The action is configured with minimum coverage settings
+      - uses: joshmfrankel/simplecov-check-action@main
+        with:
           minimum_suite_coverage: 0
           minimum_file_coverage: 0
-          github_token: ${{ secrets.GITHUB_TOKEN }} # it uses the GitHub token (secrets.GITHUB_TOKEN) to post results as comments on pull requests.
+          github_token: ${{ secrets.GITHUB_TOKEN }}
