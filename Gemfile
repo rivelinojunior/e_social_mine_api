@@ -34,7 +34,6 @@ gem 'bootsnap', require: false
 
 group :development, :test do
   gem 'brakeman', require: false
-  gem 'database_cleaner-active_record'
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
   gem 'faker'
@@ -42,7 +41,12 @@ group :development, :test do
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+end
+
+group :test do
+  gem 'database_cleaner-active_record'
   gem 'simplecov', require: false
+  gem 'simplecov-json', require: false
 end
 
 group :development do
