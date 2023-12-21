@@ -44,6 +44,7 @@ end
 
 group :test do
   gem 'database_cleaner-active_record'
+  gem 'shoulda-matchers', '~> 5.0'
   gem 'simplecov', require: false
   gem 'simplecov-json', require: false
 end
