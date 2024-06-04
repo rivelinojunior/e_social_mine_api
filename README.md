@@ -22,3 +22,21 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+## API Documentation (cURL examples)
+### User
+
+#### Sign up
+```shell
+curl --location --request POST 'http://localhost:3000/api/v1/sign_up' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "user": {
+        "full_name": "Rivel",
+        "username": "rivelinojunior",
+        "email": "r5@gmail.com",
+        "password": "dd",
+        "password_confirmation": "dd"
+    }
+}'
+```
