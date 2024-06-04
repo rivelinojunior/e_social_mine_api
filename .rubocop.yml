@@ -12,7 +12,12 @@ Rails/UnknownEnv:
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 3.2.0
+  TargetRubyVersion: 3.3.0
+  Exclude:
+    - 'vendor/**/*'
+    - 'bin/*'
+    - 'db/*'
+    - 'db/*/**'
 
 Metrics/AbcSize:
   Max: 20
