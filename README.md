@@ -24,9 +24,8 @@ Things you may want to cover:
 * ...
 
 ## API Documentation (cURL examples)
-### User
 
-#### Sign up
+### Sign up
 ```shell
 curl --location --request POST 'http://localhost:3000/api/v1/sign_up' \
 --header 'Content-Type: application/json' \
@@ -38,5 +37,15 @@ curl --location --request POST 'http://localhost:3000/api/v1/sign_up' \
         "password": "dd",
         "password_confirmation": "dd"
     }
+}'
+```
+
+### Sign in
+```shell
+curl --location --request POST 'http://localhost:3000/api/v1/sign_in' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "r5@gmail.com",
+    "password": "dd"
 }'
 ```
