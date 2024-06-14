@@ -8,5 +8,9 @@ FactoryBot.define do
     expires_in { 1.hour.from_now }
     refresh_expires_in { 1.week.from_now }
     refreshed_at { nil }
+
+    trait :expired do
+      expires_in { 1.hour.ago }
+    end
   end
 end
