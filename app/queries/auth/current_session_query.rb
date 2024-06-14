@@ -9,13 +9,17 @@ module Auth
     def query
       session = Session.find_by!(token:)
 
+      return Result::Failure(:expired, errors: ['session expired']) if expired?(session.expires_in)
+
       Result::Success(:ok, session:, user: session.user)
     rescue ActiveRecord::RecordNotFound => e
-      Result::Failure(:not_found, errosr: [e.message])
+      Result::Failure(:not_found, errors: [e.message])
     end
 
     private
 
     attr_accessor :token
+
+    def expired?(expires_in) = Time.current > expires_in
   end
 end
