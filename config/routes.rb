@@ -3,9 +3,11 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      resource :sign_up, only: :create, controller: :sign_up
-      resource :sign_in, only: :create, controller: :sign_in
-      resource :sign_out, only: :destroy, controller: :sign_out
+      namespace :auth do
+        resource :sign_up, only: :create, controller: :sign_up
+        resource :sign_in, only: :create, controller: :sign_in
+        resource :sign_out, only: :destroy, controller: :sign_out
+      end
     end
   end
 end

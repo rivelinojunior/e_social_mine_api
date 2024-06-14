@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Api::V1::SignInController' do
-  describe 'POST /api/v1/sign_in' do
-    subject(:perform_request) { post '/api/v1/sign_in', params:, as: :json }
+RSpec.describe 'Api::V1::Auth::SignInController' do
+  describe 'POST /api/v1/auth/sign_in' do
+    subject(:perform_request) { post '/api/v1/auth/sign_in', params:, as: :json }
 
     let!(:user) do
       create(:user, email: 'rivelino@gmail.com', password: '9gU1qbBSoT', password_confirmation: '9gU1qbBSoT')

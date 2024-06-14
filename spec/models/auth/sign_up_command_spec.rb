@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Users::SignUpCommand do
+RSpec.describe Auth::SignUpCommand do
   describe '#call' do
     subject(:sign_up) { described_class.call(params:) }
 
