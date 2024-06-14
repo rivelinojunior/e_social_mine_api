@@ -9,9 +9,9 @@ module Auth
     def query
       session = Session.find_by!(token:)
 
-      return Result::Success(:ok, session:, user: session.user) unless expired?(session.expires_in)
+      return Result::Failure(:expired, errors: ['session expired']) if expired?(session.expires_in)
 
-      Result::Failure(:expired, errors: ['session expired'])
+      Result::Success(:ok, session:, user: session.user)
     rescue ActiveRecord::RecordNotFound => e
       Result::Failure(:not_found, errors: [e.message])
     end
