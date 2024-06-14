@@ -2,7 +2,9 @@
 
 module Api
   module V1
-    class SignInController < ApplicationController
+    class SignInController < BaseController
+      skip_before_action :authenticate!
+
       def create
         case Auth::SignInCommand.call(params: auth_params)
         in Result::Success(session:)

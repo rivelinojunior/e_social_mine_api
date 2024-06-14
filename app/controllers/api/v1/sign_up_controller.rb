@@ -2,7 +2,9 @@
 
 module Api
   module V1
-    class SignUpController < ApplicationController
+    class SignUpController < BaseController
+      skip_before_action :authenticate!
+
       def create
         case Users::SignUpCommand.call(params: user_params)
         in Result::Success(user:)
