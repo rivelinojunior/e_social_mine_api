@@ -33,3 +33,6 @@ Lint/MissingSuper:
 
 RSpec/ExampleLength:
   Max: 30
+
+RSpec/NestedGroups:
+  Max: 5
