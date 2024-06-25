@@ -8,6 +8,8 @@ Rails.application.routes.draw do
         resource :sign_in, only: :create, controller: :sign_in
         resource :sign_out, only: :destroy, controller: :sign_out
       end
+
+      resources :posts, only: :create
     end
   end
 end
