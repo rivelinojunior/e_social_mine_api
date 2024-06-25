@@ -26,7 +26,7 @@ module Api
 
       def query_session(token)
         @query_session ||=
-          case Auth::CurrentSessionQuery.query(token:)
+          case ::Auth::CurrentSessionQuery.query(token:)
           in Result::Success(session:, user:)
             [session, user]
           in Result::Failure

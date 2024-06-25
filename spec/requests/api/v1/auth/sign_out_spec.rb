@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Api::V1::SignOutController' do
-  describe 'DELETE /api/v1/sign_out' do
-    subject(:perform_request) { delete '/api/v1/sign_out', headers: }
+RSpec.describe 'Api::V1::Auth::SignOutController' do
+  describe 'DELETE /api/v1/auth/sign_out' do
+    subject(:perform_request) { delete '/api/v1/auth/sign_out', headers: }
 
     let!(:current_session) { create(:session) }
 

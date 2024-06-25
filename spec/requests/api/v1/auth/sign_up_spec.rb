@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Api::V1::SignUpController' do
-  describe 'POST /api/v1/sign_up' do
-    subject(:perform_request) { post '/api/v1/sign_up', params:, as: :json }
+RSpec.describe 'Api::V1::Auth::SignUpController' do
+  describe 'POST /api/v1/auth/sign_up' do
+    subject(:perform_request) { post '/api/v1/auth/sign_up', params:, as: :json }
 
     before { freeze_time }
 
