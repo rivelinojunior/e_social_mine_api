@@ -37,7 +37,8 @@ RSpec.describe 'Posts API V1' do
             'id' => post.id,
             'content' => 'Hello, world!',
             'user_id' => current_session.user_id,
-            'created_at' => post.created_at.iso8601(3)
+            'created_at' => post.created_at.iso8601(3),
+            'hashtags' => nil
           )
         end
       end
