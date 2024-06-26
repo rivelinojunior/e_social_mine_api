@@ -18,7 +18,7 @@ RSpec.describe 'Posts API V1' do
       context 'with valid params' do
         let(:params) do
           {
-            content: 'Hello, world!'
+            content: 'Hello, world! #practiceMakesPerfect'
           }
         end
 
@@ -35,10 +35,10 @@ RSpec.describe 'Posts API V1' do
 
           expect(response.parsed_body).to eq(
             'id' => post.id,
-            'content' => 'Hello, world!',
+            'content' => 'Hello, world! #practiceMakesPerfect',
             'user_id' => current_session.user_id,
             'created_at' => post.created_at.iso8601(3),
-            'hashtags' => nil
+            'hashtags' => ['practiceMakesPerfect']
           )
         end
       end
