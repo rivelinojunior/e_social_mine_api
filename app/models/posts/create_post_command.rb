@@ -8,7 +8,9 @@ module Posts
     end
 
     def call
-      post = Post.create!(content:, user_id:)
+      hashtags = extract_hashtags(content)
+
+      post = Post.create!(content:, user_id:, hashtags:)
 
       Result::Success(:created, post:)
     rescue ActiveRecord::RecordInvalid => e
@@ -18,5 +20,11 @@ module Posts
     private
 
     attr_accessor :content, :user_id
+
+    def extract_hashtags(content)
+      hashtags = content.scan(/#\w+/).map { |hashtag| hashtag.delete_prefix('#') }.compact.uniq
+
+      hashtags.presence
+    end
   end
 end
