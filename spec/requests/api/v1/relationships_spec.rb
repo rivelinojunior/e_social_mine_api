@@ -90,4 +90,50 @@ RSpec.describe 'Relationships API V1' do
       end
     end
   end
+
+  describe 'DELETE /api/v1/relationships/:followee_id' do
+    subject(:perform_request) { delete "/api/v1/relationships/#{followee_id}", headers: }
+
+    let(:followee_id) { create(:user).id }
+
+    context 'when the user is authenticated' do
+      let(:current_session) { create(:session) }
+
+      let(:headers) do
+        {
+          'Authorization' => "Bearer #{current_session.token}"
+        }
+      end
+
+      context 'with valid followee' do
+        before { create(:relationship, follower_id: current_session.user_id, followee_id:) }
+
+        it 'returns a 200 status code' do
+          perform_request
+
+          expect(response).to have_http_status(:ok)
+        end
+      end
+
+      context 'with invalid followee' do
+        let(:followee_id) { 1_000 }
+
+        it 'returns a 404 status code' do
+          perform_request
+
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+    end
+
+    context 'when the user is not authenticated' do
+      let(:headers) { {} }
+
+      it 'returns a 401 status code' do
+        perform_request
+
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
 end
