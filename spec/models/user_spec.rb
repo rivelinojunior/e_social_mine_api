@@ -21,6 +21,29 @@ RSpec.describe User do
   end
 
   describe 'associations' do
+    subject(:user) { build(:user) }
+
     it { is_expected.to have_many(:sessions).dependent(:destroy) }
+
+    it do
+      expect(user)
+        .to have_many(:following_relationships)
+        .class_name('Relationship')
+        .with_foreign_key('follower_id')
+        .dependent(:destroy)
+        .inverse_of(:follower)
+    end
+
+    it do
+      expect(user)
+        .to have_many(:follower_relationships)
+        .class_name('Relationship')
+        .with_foreign_key('followee_id')
+        .dependent(:destroy)
+        .inverse_of(:followee)
+    end
+
+    it { is_expected.to have_many(:followees).through(:following_relationships) }
+    it { is_expected.to have_many(:followers).through(:follower_relationships) }
   end
 end
