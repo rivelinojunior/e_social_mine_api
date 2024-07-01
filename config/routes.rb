@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       end
 
       resources :posts, only: :create
+      resources :relationships, only: :create
     end
   end
 end
