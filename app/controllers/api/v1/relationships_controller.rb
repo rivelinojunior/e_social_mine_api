@@ -15,6 +15,18 @@ module Api
         end
       end
 
+      def destroy
+        follower_id = current_user.id
+        followee_id = params[:followee_id]
+
+        case Relationships::UnfollowUserCommand.call(follower_id:, followee_id:)
+        in Result::Success(type: :ok)
+          head :ok
+        in Result::Failure(type: :not_found)
+          head :not_found
+        end
+      end
+
       private
 
       def relationship_params
