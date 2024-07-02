@@ -9,7 +9,10 @@ Rails.application.routes.draw do
         resource :sign_out, only: :destroy, controller: :sign_out
       end
 
-      resources :posts, only: :create
+      resources :posts, only: :create do
+        resources :reactions, only: :create
+      end
+
       resources :relationships, only: %i[create destroy], param: :followee_id
     end
   end
