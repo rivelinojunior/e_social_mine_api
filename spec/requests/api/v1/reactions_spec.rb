@@ -111,4 +111,54 @@ RSpec.describe 'Reactions API V1' do
       end
     end
   end
+
+  describe 'DELETE /api/v1/reactions/{{reaction_id}}' do
+    subject(:perform_request) { delete "/api/v1/reactions/#{reaction_id}", headers: }
+
+    context 'when the user is authenticated' do
+      let(:current_session) { create(:session) }
+
+      let(:headers) do
+        {
+          'Authorization' => "Bearer #{current_session.token}"
+        }
+      end
+
+      context 'with valid reaction_id' do
+        let!(:reaction) { create(:reaction, user: current_session.user) }
+        let(:reaction_id) { reaction.id }
+
+        it 'returns a 204 status code' do
+          perform_request
+
+          expect(response).to have_http_status(:no_content)
+        end
+
+        it 'deletes the reaction' do
+          expect { perform_request }.to change(Reaction, :count).by(-1)
+        end
+      end
+
+      context 'with invalid reaction_id' do
+        let(:reaction_id) { 0 }
+
+        it 'returns a 404 status code' do
+          perform_request
+
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+    end
+
+    context 'when the user is not authenticated' do
+      let(:headers) { {} }
+      let(:reaction_id) { 0 }
+
+      it 'returns a 401 status code' do
+        perform_request
+
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
 end

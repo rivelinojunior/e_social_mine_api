@@ -16,6 +16,15 @@ module Api
         end
       end
 
+      def destroy
+        case Reactions::RemoveReactionCommand.call(id: params[:id])
+        in Result::Success(type: :ok)
+          head :no_content
+        in Result::Failure(type: :not_found)
+          head :not_found
+        end
+      end
+
       private
 
       def reaction_params
