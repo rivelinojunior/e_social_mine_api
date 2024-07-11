@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
       resources :posts, only: :create do
         resources :reactions, only: :create
+        resources :comments, only: :create
       end
 
       resources :reactions, only: :destroy
