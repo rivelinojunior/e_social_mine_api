@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       end
 
       resources :reactions, only: :destroy
+      resources :comments, only: :destroy
       resources :relationships, only: %i[create destroy], param: :followee_id
     end
   end

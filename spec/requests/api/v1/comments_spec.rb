@@ -80,4 +80,57 @@ RSpec.describe 'Comments API V1' do
       end
     end
   end
+
+  describe 'DELETE /api/v1/comments/:id' do
+    subject(:perform_request) { delete "/api/v1/comments/#{comment_id}", headers: }
+
+    context 'when the user is authenticated' do
+      let(:current_session) { create(:session) }
+      let!(:comment) { create(:comment, user: current_session.user) }
+      let(:comment_id) { comment.id }
+
+      let(:headers) do
+        {
+          'Authorization' => "Bearer #{current_session.token}"
+        }
+      end
+
+      context 'when the comment exists' do
+        it 'returns a 204 status code' do
+          perform_request
+
+          expect(response).to have_http_status(:no_content)
+        end
+
+        it 'removes the comment' do
+          expect { perform_request }.to change(Comment, :count).by(-1)
+        end
+      end
+
+      context 'when the comment does not exist' do
+        let(:comment_id) { 0 }
+
+        it 'returns a 404 status code' do
+          perform_request
+
+          expect(response).to have_http_status(:not_found)
+        end
+
+        it 'does not remove any comment' do
+          expect { perform_request }.not_to change(Comment, :count)
+        end
+      end
+    end
+
+    context 'when the user is not authenticated' do
+      let(:headers) { {} }
+      let(:comment_id) { 0 }
+
+      it 'returns a 401 status code' do
+        perform_request
+
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
 end
