@@ -14,6 +14,7 @@ Rails.application.routes.draw do
         resources :comments, only: :create
       end
 
+      resource :profile, only: :update
       resources :reactions, only: :destroy
       resources :comments, only: :destroy
       resources :relationships, only: %i[create destroy], param: :followee_id
